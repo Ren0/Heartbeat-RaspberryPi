@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, urllib, urllib2, socket, getopt
+import os.path, subprocess, sys, urllib, urllib2, socket, getopt
 
 # crontab example: 30 * * * * python /home/pi/administration/heartbeat.py
 def main(argv):
