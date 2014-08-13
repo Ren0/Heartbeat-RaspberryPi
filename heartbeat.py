@@ -10,6 +10,13 @@ def main(argv):
 	headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
 	ipProviderUrl = 'http://ip.42.pl/raw'
 
+	# Service list managment
+	runningServiceRetrieverPath = "/home/pi/administration/linux_serviceList.py"
+	serviceList = "notSet"
+	if os.path.isfile(runningServiceRetrieverPath) :
+		proc = subprocess.Popen(['python', runningServiceRetrieverPath], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+		serviceList = proc.communicate()[0]
+		
 	try:
 		opts, args = getopt.getopt(argv,'ht:m:l:')
 		if(len(opts) < 2):
@@ -32,7 +39,7 @@ def main(argv):
 	hostname = socket.gethostname()
 	url = urllib2.urlopen(ipProviderUrl).read()
 	
-	params = urllib.urlencode({'hostname': hostname, 'machinename': machinename, 'location': location, 'url': url})
+	params = urllib.urlencode({'hostname': hostname, 'machinename': machinename, 'location': location, 'url': url, 'serviceList': serviceList})
 	f = urllib.urlopen(targetServer, params)
 
 def exit():
